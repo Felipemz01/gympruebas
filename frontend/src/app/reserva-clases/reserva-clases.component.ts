@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms'; // <-- Necesario para ngModel
 import { CommonModule } from '@angular/common'; // <-- Necesario para *ngIf
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-reserva-clases',
@@ -24,16 +25,25 @@ export class ReservaClasesComponent implements OnInit {
     this.cargarHorarios();
     this.cargarReservas();
     this.cargarReservas();
-    this.http.get('http://localhost:8000/csrf-token/', { withCredentials: true }).subscribe(() => {
+    /*this.http.get('http://localhost:8000/csrf-token/', { withCredentials: true }).subscribe(() => {*/
+    this.http.get('${environment.apiUrl}/csrf-token/', { withCredentials: true }).subscribe(() => {
       console.log('Token CSRF recibido');
     });
   }
 
   cargarHorarios(): void {
-    this.http.get<any[]>('http://localhost:8000/horarios/', { withCredentials: true })
+    this.http.get(`${environment.apiUrl}/horarios/`, { withCredentials: true })
       .subscribe({
         next: (data) => {
-          this.horarios = data;
+          console.log('Respuesta del backend:', data);  // 👀 Esto nos dirá si es un array u objeto
+          if (Array.isArray(data)) {
+            this.horarios = data;
+          } else if ('horarios' in data && Array.isArray(data['horarios'])) {
+            this.horarios = data['horarios'];
+          } else {
+            this.error = 'Formato inesperado de los datos.';
+            console.error('Formato de respuesta inesperado:', data);
+          }
         },
         error: (err) => {
           console.error(err);
@@ -54,7 +64,8 @@ export class ReservaClasesComponent implements OnInit {
       id_horario: idHorario
     };
 
-    this.http.post('http://localhost:8000/reservar/', body)
+    /*this.http.post('http://localhost:8000/reservar/', body)*/
+    this.http.post(`${environment.apiUrl}/reservar/`, body)
       .subscribe({
         next: (res: any) => {
           this.mensaje = res.mensaje;
@@ -70,7 +81,8 @@ export class ReservaClasesComponent implements OnInit {
   }
 
   cerrarSesion(): void {
-    this.http.post('http://localhost:8000/logout/', {}, { withCredentials: true }).subscribe({
+    /*this.http.post('http://localhost:8000/logout/', {}, { withCredentials: true }).subscribe({*/
+    this.http.post(`${environment.apiUrl}/logout/`, {}, { withCredentials: true }).subscribe({
       next: () => {
         localStorage.removeItem('miembro_id');  // si lo usas para controlar sesión
         window.location.href = '/login'; // redirige al login o landing
@@ -146,7 +158,8 @@ cargarReservas(): void {
   const idMiembro = localStorage.getItem('userId');
   if (!idMiembro) return;
 
-  this.http.get<any[]>(`http://localhost:8000/mis-reservas/?id_miembro=${idMiembro}`, { withCredentials: true })
+  /*this.http.get<any[]>(`http://localhost:8000/mis-reservas/?id_miembro=${idMiembro}`, { withCredentials: true })*/
+  this.http.get<any[]>(`${environment.apiUrl}/mis-reservas/?id_miembro=${idMiembro}`, { withCredentials: true })
     .subscribe({
       next: (data) => {
         this.reservas = data;
@@ -165,7 +178,8 @@ getCookie(name: string): string {
 cancelarReserva(reservaId: number): void {
   const csrfToken = this.getCookie('csrftoken');
 
-  this.http.delete(`http://localhost:8000/cancelar-reserva/${reservaId}/`, {
+  /*this.http.delete(`http://localhost:8000/cancelar-reserva/${reservaId}/`, {*/
+  this.http.delete(`${environment.apiUrl}/cancelar-reserva/${reservaId}/`, {
     headers: {
       'X-CSRFToken': csrfToken
     },
