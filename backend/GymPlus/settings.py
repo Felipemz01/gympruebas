@@ -27,7 +27,8 @@ SECRET_KEY = 'django-insecure-k3&wh$0q)1b%%8jyl@=doci@4n5p^upw&8+4i$#t!s2sv*yr!x
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [ "gympruebas-production.up.railway.app",  # <-- cámbialo si tu dominio es distinto
+    "127.0.0.1", "localhost"]
 
 
 # Application definition
@@ -129,7 +130,8 @@ STATICFILES_DIRS = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:4200",
+        "https://gymplus-frontend-mekcjbxg0-felipemz01s-projects.vercel.app",
+        "https://gymplus-frontend-bay.vercel.app"
 ]
 
 CORS_ALLOW_CREDENTIALS = True
