@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } 
 import { RegistroService } from '../../app/services/registro.service';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router'; // ya debería estar si estás navegando
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-registro',
@@ -38,7 +39,8 @@ export class RegistroComponent implements OnInit {
   }
 
   cargarMembresias(): void {
-    this.http.get<any[]>('http://localhost:8000/membresias/')
+    /*this.http.get<any[]>('http://localhost:8000/membresias/')*/
+    this.http.get<any[]>('${environment.apiUrl}/membresias/')
       .subscribe({
         next: (data) => {
           this.membresias = data;
