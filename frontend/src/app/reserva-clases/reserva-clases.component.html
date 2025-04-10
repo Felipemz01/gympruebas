@@ -1,0 +1,97 @@
+<div class="saludo-banner">
+  <div class="saludo-izquierda">
+    <h2>Hola, {{ userName }}👋</h2>
+  </div>
+  <div class="saludo-centro">
+    <h1 class="titulo-gym">GYMPLUS</h1>
+  </div>
+  <div class="saludo-derecha">
+    <button (click)="cerrarSesion()" class="btn-redondeado">
+      <i class="fa fa-sign-out-alt"></i> Cerrar sesión
+    </button>
+  </div>
+</div>
+
+
+<div class="panel-container">
+  <!-- Columna 1: Horarios -->
+  <div class="columna">
+    <h2>Horarios Disponibles</h2>
+
+    
+    <p class="alert alert-success" *ngIf="horarios.length === 0" class="alert alert-info">No hay horarios disponibles por ahora.</p>
+    <p *ngIf="mensaje" class="alert alert-info" >{{ mensaje }}</p>
+    <div *ngIf="error"  class="alert alert-error">{{ error }}</div>
+
+    <div class="filtros">
+      <input type="text" [(ngModel)]="filtroBusqueda" placeholder="Buscar clase o instructor..." />
+      <select [(ngModel)]="filtroDia">
+        <option value="">Todos los días</option>
+        <option *ngFor="let dia of diasSemana">{{ dia }}</option>
+      </select>
+    </div>
+
+    <table *ngIf="horarios.length > 0" class="tabla-horarios">
+      <thead>
+        <tr>
+          <th (click)="ordenarPor('clase')">Clase {{ obtenerIconoOrden('clase') }}</th>
+          <th (click)="ordenarPor('instructor')">Instructor {{ obtenerIconoOrden('instructor') }}</th>
+          <th (click)="ordenarPor('sala')">Sala {{ obtenerIconoOrden('sala') }}</th>
+          <th (click)="ordenarPor('dia_semana')">Día {{ obtenerIconoOrden('dia_semana') }}</th>
+          <th (click)="ordenarPor('hora_inicio')">Hora {{ obtenerIconoOrden('hora_inicio') }}</th>
+          <th (click)="ordenarPor('cupos_disponibles')">Cupos {{ obtenerIconoOrden('cupos_disponibles') }}</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let horario of obtenerHorariosFiltrados()">
+          <td>{{ horario.clase }}</td>
+          <td>{{ horario.instructor }} {{ horario.apellido || '' }}</td>
+          <td>{{ horario.sala }}</td>
+          <td>{{ horario.dia_semana }}</td>
+          <td>{{ formatearHora(horario.hora_inicio) }} - {{ formatearHora(horario.hora_fin) }}</td>
+          <td>{{ horario.cupos_disponibles }}</td>
+          <td>
+            <button 
+              (click)="reservarClase(horario.id)" 
+              [disabled]="horario.cupos_disponibles <= 0"
+              class="btn btn-primary">
+              Reservar
+            </button>
+            <span  class="alert alert-warning" *ngIf="horario.cupos_disponibles <= 0" class="text-danger">Clase llena</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Columna 2: Reservas -->
+  <div class="columna">
+    <h2>Mis Reservas</h2>
+
+    <table *ngIf="reservas.length > 0" class="tabla-reservas">
+      <thead>
+        <tr>
+          <th>Clase</th>
+          <th>Instructor</th>
+          <th>Sala</th>
+          <th>Día</th>
+          <th>Hora</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let reserva of reservas">
+          <td>{{ reserva.clase }}</td>
+          <td>{{ reserva.instructor }} {{ reserva.apellido }}</td>
+          <td>{{ reserva.sala }}</td>
+          <td>{{ reserva.dia_semana }}</td>
+          <td>{{ reserva.hora_inicio }} - {{ reserva.hora_fin }}</td>
+          <td><button  class="btn btn-primary" (click)="cancelarReserva(reserva.id)">Cancelar</button></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="alert alert-info" *ngIf="reservas.length === 0">No tienes reservas activas.</p>
+  </div>
+</div>

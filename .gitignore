@@ -1,0 +1,35 @@
+# === PYTHON / DJANGO ===
+*.pyc
+__pycache__/
+db.sqlite3
+.env
+.env.*
+*.log
+media/
+staticfiles/
+*.sqlite3
+*.py[cod]
+*.pyo
+*.pyd
+
+# VSCode
+.vscode/
+
+# Django migrations
+*/migrations/
+!*/migrations/__init__.py
+
+# === NODE / ANGULAR ===
+/node_modules/
+dist/
+tmp/
+.angular/cache/
+.angular/config.json
+src/environments/environment*.ts
+
+# === SISTEMA ===
+.DS_Store
+Thumbs.db
+*.bak
+*.swp
+*.swo

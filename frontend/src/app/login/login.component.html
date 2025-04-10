@@ -1,0 +1,35 @@
+
+<div class="login-wrapper">
+  <div class="login-box">
+    <!-- Lado izquierdo - Formulario -->
+    <div class="form-side">
+      <form (ngSubmit)="login()" class="login-form">
+          <h1 class="titulos">Iniciar Sesión</h1>
+          <br>
+          <br>
+          <div class="input-group">
+            <i class="icon">&#9993;</i>
+            <input type="email" [(ngModel)]="username" name="email" placeholder="Correo Electronico" required />
+          </div>
+          <div class="input-group">
+            <i class="icon">&#128274;</i>
+            <input type="password" [(ngModel)]="password" name="contrasena" placeholder="Contraseña" required />
+          </div>
+          <button type="submit" class="btn-login">Iniciar Sesión</button>
+
+    <p *ngIf="error" class="error-msg">{{ error }}</p>
+    
+  </form>
+      <label class="label">
+        ¿No tienes una cuenta?  <a href="/registro">Regístrate aquí</a> </label>
+       
+</div>
+
+   <!-- Lado derecho - Imagen y texto -->
+   <div class="image-side">
+    <div class="overlay-text">
+      <h1>GYMPLUS</h1>
+    </div>
+  </div>
+</div>
+</div>

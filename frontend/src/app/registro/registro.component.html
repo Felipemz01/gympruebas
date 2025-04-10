@@ -1,0 +1,59 @@
+<div class="login-wrapper">
+  <div class="login-box">
+    <!-- Lado izquierdo - Formulario -->
+    <div class="form-side">
+
+      <label class="label">Formulario de Registro</label>
+      <p class="alert alert-success">{{ mensaje }}</p>
+    <form [formGroup]="registroForm" (ngSubmit)="onSubmit()" class="registro-form">
+      <div class="input-group">
+        <i class="icon">&#128100;</i>
+          <input formControlName="nombre" placeholder="Digite sus Nombres" required />
+      </div>
+      <div class="input-group">
+        <i class="icon">&#128100;</i>
+      <input formControlName="apellido" placeholder="Digite sus Apellidos" required />
+    </div>
+      <div class="input-group">
+        <i class="icon">&#9993;</i>
+      <input formControlName="email" placeholder="Email" type="email" required />
+    </div>
+      <div class="input-group">
+        <i class="icon">&#128222;</i>
+      <input formControlName="telefono" placeholder="Teléfono" />
+    </div>
+      <div class="input-group">
+        <i class="icon">&#128100;</i>
+      <input formControlName="contrasena" placeholder="Contraseña" type="password" required />
+    </div>
+
+  <!-- Dropdown de membresías -->
+  <div class="input-group">
+    <i class="icon">&#128100;</i>
+  <select formControlName="membresia" required>
+    <option value="">Selecciona una membresía</option>
+    <option *ngFor="let m of membresias" [value]="m.id">
+      {{ m.nombre }} - {{ m.duracion }} días - ${{ m.precio }}
+    </option>
+  </select>
+</div>
+
+    <button type="submit" class="btn-login">Registrarse</button>
+    <br>
+    <br>
+    <button type="button" class="btn-login" (click)="volverAlLogin()">
+      Volver al inicio de sesión
+    </button>
+  </form>
+</div>
+
+   <!-- Lado derecho - Imagen y texto -->
+   <div class="image-side">
+    <div class="overlay-text">
+    </div>
+  </div>
+</div>
+</div>
+
+
+
