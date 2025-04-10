@@ -40,7 +40,7 @@ export class RegistroComponent implements OnInit {
 
   cargarMembresias(): void {
     /*this.http.get<any[]>('http://localhost:8000/membresias/')*/
-    this.http.get<any[]>('${environment.apiUrl}/membresias/')
+    this.http.get<any[]>(`${environment.apiUrl}/membresias/`)
       .subscribe({
         next: (data) => {
           this.membresias = data;
