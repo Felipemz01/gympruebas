@@ -26,7 +26,7 @@ export class ReservaClasesComponent implements OnInit {
     this.cargarReservas();
     this.cargarReservas();
     /*this.http.get('http://localhost:8000/csrf-token/', { withCredentials: true }).subscribe(() => {*/
-    this.http.get('${environment.apiUrl}/csrf-token/', { withCredentials: true }).subscribe(() => {
+    this.http.get(`${environment.apiUrl}/csrf-token/`, { withCredentials: true }).subscribe(() => {
       console.log('Token CSRF recibido');
     });
   }
