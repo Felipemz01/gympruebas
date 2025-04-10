@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms'; // <-- Necesario para ngModel
 import { CommonModule } from '@angular/common'; // <-- Necesario para *ngIf
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,8 @@ export class LoginComponent {
       contrasena: this.password
     };
   
-    this.http.post('http://localhost:8000/login/', body, { withCredentials: true })
+    /*this.http.post('http://localhost:8000/login/', body, { withCredentials: true })*/
+    this.http.post(`${environment.apiUrl}/login/`, body, { withCredentials: true })
       .subscribe({
         next: (res: any) => {
           // 👇 Guarda el ID del miembro en localStorage
