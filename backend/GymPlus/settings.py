@@ -142,9 +142,11 @@ CSRF_TRUSTED_ORIGINS = [
 
 # Permitir cookies de sesión en el frontend
 SESSION_COOKIE_SAMESITE = None
-SESSION_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = True
 
 CSRF_COOKIE_SAMESITE = None
-CSRF_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = True
 
 #⚠️ Nota: SESSION_COOKIE_SECURE = False y CSRF_COOKIE_SECURE = False son para desarrollo local. En producción deben ir en True si usas HTTPS.
+
+print("DATABASE_URL:", os.getenv("DATABASE_URL"))
